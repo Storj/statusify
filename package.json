@@ -1,0 +1,34 @@
+{
+  "name": "statusify",
+  "version": "0.0.1",
+  "description": "Status API for farmer status reporing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Storj/statusify.git"
+  },
+  "author": {
+    "name": "Philip Hutchins",
+    "email": "philip@storj.io"
+  },
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Storj/statusify/issues"
+  },
+  "homepage": "https://github.com/Storj/statusify#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "change-case": "^2.3.1",
+    "dotenv": "^2.0.0",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.10",
+    "morgan": "^1.7.0",
+    "nconf": "^0.8.4",
+    "path": "^0.12.7",
+    "require-dir": "^0.3.0",
+    "winston": "^2.2.0"
+  }
+}
