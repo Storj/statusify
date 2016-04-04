@@ -13,10 +13,18 @@ module.exports = function(router) {
     console.log("[GET][REPORT] Request.body: ", req.body);
     return res.sendStatus(200);
   })
-  .post(function(req, res, next) {
+  .post(function(req, res) {
     console.log("Got post for report");
     console.log("request.method is: " + req.method);
-    new RPCHandler(req, res, reportMethods, true); });
+    return new RPCHandler(req, res, RPCMethods, true); });
 };
 
-
+RPCMethods = {
+  mymethod: function(rpc, params) {
+    if(params) {
+      rpc.response("got params");
+    } else {
+      rpc.error("error man...");
+    }
+  }
+}
