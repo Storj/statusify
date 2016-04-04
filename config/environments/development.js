@@ -4,5 +4,6 @@ nconf.set('url', 'localhost');
 nconf.set('database', {
   user: 'username',
   password: 'password',
-  server: 'localhost'
+  server: 'localhost',
+  database: 'statusify'
 });

@@ -28,6 +28,7 @@
     "mongoose": "^4.4.10",
     "morgan": "^1.7.0",
     "nconf": "^0.8.4",
+    "node-express-json-rpc2": "^1.0.2",
     "path": "^0.12.7",
     "require-dir": "^0.3.0",
     "winston": "^2.2.0"

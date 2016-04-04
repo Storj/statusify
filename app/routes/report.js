@@ -2,29 +2,18 @@
 
 var RPCHandler = require('jsonrpc').RPCHandler;
 var Report = require('../models/report');
-var reportMethods = require('../methods/report');
+var RPCMethods = require('../methods/report');
 
-module.exports = function(router) {
+module.exports = function(req, res) {
   'use strict';
 
   // This will handle the url calls for /report
-  router.route('/')
-  .get(function(req, res) {
-    console.log("[GET][REPORT] Request.body: ", req.body);
-    return res.sendStatus(200);
-  })
-  .post(function(req, res) {
+  if ( req.method == "POST" ) {
     console.log("Got post for report");
     console.log("request.method is: " + req.method);
-    return new RPCHandler(req, res, RPCMethods, true); });
-};
-
-RPCMethods = {
-  mymethod: function(rpc, params) {
-    if(params) {
-      rpc.response("got params");
-    } else {
-      rpc.error("error man...");
-    }
+    return new RPCHandler(req, res, RPCMethods, true);
+  } else {
+    console.log("[GET][REPORT] Request.body: ", req.body);
+    return res.sendStatus(200);
   }
-}
+};

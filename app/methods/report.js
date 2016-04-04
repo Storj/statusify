@@ -1,6 +1,9 @@
+var Report = require('../models/report');
+
 module.exports = {
   REPORT: function(rpc, params) {
     // Save the report
+    console.log("[RPC][REPORT] Creating report with params: ", params);
     Report.create(params, function(err) {
       var rpcResponse;
 
@@ -18,7 +21,7 @@ module.exports = {
           }
         };
 
-        rpc.error(rpcResponse);
+        return rpc.error(rpcResponse);
       }
 
       console.log("[POST][REPORT] Report created!");
@@ -29,7 +32,7 @@ module.exports = {
         }
       };
 
-      rpc.response(rpcResponse);
+      return rpc.response(rpcResponse);
     });
   }
 };
