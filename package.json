@@ -1,36 +1,55 @@
 {
   "name": "statusify",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Status API for farmer status reporing",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test PORT=3001 DB='mongodb://localhost:27017/statusify-test' istanbul cover _mocha -- --recursive test/",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Storj/statusify.git"
   },
-  "author": {
-    "name": "Philip Hutchins",
-    "email": "philip@storj.io"
-  },
+  "authors": [
+    {
+      "name": "Philip Hutchins",
+      "email": "philip@storj.io"
+    },
+    {
+      "name": "Ian Patton",
+      "email": "ian.patton@gmail.com"
+    }
+  ],
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/Storj/statusify/issues"
   },
   "homepage": "https://github.com/Storj/statusify#readme",
   "dependencies": {
+    "async": "^1.5.2",
+    "bitcore-ecies": "^1.0.1",
     "body-parser": "^1.15.0",
-    "change-case": "^2.3.1",
-    "dotenv": "^2.0.0",
+    "config": "^1.19.0",
+    "cors": "^2.7.1",
     "express": "^4.13.4",
-    "jsonrpc": "^0.1.1",
-    "mongoose": "^4.4.10",
-    "morgan": "^1.7.0",
-    "nconf": "^0.8.4",
-    "node-express-json-rpc2": "^1.0.2",
-    "path": "^0.12.7",
-    "require-dir": "^0.3.0",
+    "lodash": "^4.8.2",
+    "lodash-keyarrange": "^1.1.0",
+    "mongoose": "^4.4.11",
+    "node-uuid": "^1.4.7",
     "winston": "^2.2.0"
-  }
+  },
+  "devDependencies": {
+    "bitcore-lib": "^0.13.14",
+    "bitcore-message": "^1.0.2",
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
+    "eslint": "1.8.0",
+    "eslint-config-defaults": "^7.0.0",
+    "eslint-plugin-filenames": "^0.2.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "supertest": "^1.2.0"
+  },
+  "engine": "node >= 5.9.0"
 }

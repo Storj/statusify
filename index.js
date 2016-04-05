@@ -1,37 +1,23 @@
-// /index.js
 'use strict';
 
-var server = require('./config/initializers/server');
-var nconf = require('nconf');
-var async = require('async');
-var logger = require('winston');
+const server = require('./server');
+const log = require('./lib/logger');
 
-// Load Environment variables from .env file
-require('dotenv').load();
+server.start(() => {
+  log.info('Started');
+});
 
-// Set up configs
-nconf.use('memory');
-// First load command line arguments
-nconf.argv();
-// Load environment variables
-nconf.env();
-// Load config file for the environment
-require('./config/environments/' + nconf.get('NODE_ENV'));
+process.on('SIGINT', () => {
+  server.stop(() => {
+    log.info('Stopped by SIGINT');
+  });
+});
 
-logger.info('[APP] Starting server initialization');
-
-// Initialize Modules
-async.series([
-  function initializeDBConnection(callback) {
-    require('./config/initializers/database')(nconf, callback);
-  },
-  function startServer(callback) {
-    server(callback);
-  }], function(err) {
-    if (err) {
-      logger.error('[APP] initialization failed', err);
-    } else {
-      logger.info('[APP] initialized SUCCESSFULLY');
-    }
+// PM2 sends IPC message for graceful shutdown
+process.on('message', (msg) => {
+  if (msg === 'shutdown') {
+    server.stop(() => {
+      log.info('Stopped by PM2');
+    });
   }
-);
+});
