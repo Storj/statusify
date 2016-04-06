@@ -3,7 +3,8 @@
 const server = require('./server');
 const log = require('./lib/logger');
 
-server.start(() => {
+server.start((err) => {
+  if (err) { return log.error(err); }
   log.info('Started');
 });
 
