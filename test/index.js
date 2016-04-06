@@ -54,7 +54,6 @@ describe('Statusify - Self Reporting', () => {
         method: 'report',
         id: uuid.v1(),
         params: {
-          pubkey: keys.client.publicKey.toString('hex'),
           timestamp: Date.now(),
           'storage': {
             'free': 1000,
