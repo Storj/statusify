@@ -8,6 +8,7 @@ const routes = require('./lib/route');
 const config = require('config');
 
 const app = express();
+app.enable('trust proxy');
 app.use(cors());
 app.options('*', cors());
 app.use(bodyParser.json({limit: '1kb'}));

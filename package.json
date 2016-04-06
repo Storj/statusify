@@ -33,6 +33,7 @@
     "config": "^1.19.0",
     "cors": "^2.7.1",
     "express": "^4.13.4",
+    "ipaddr.js": "^1.1.0",
     "lodash": "^4.8.2",
     "lodash-keyarrange": "^1.1.0",
     "mongoose": "^4.4.11",
