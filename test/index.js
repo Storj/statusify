@@ -30,7 +30,7 @@ describe('Statusify - Self Reporting', () => {
 
   describe('Successful POSTs', () => {
     const keyPOST = {
-      method: 'key',
+      method: 'KEY',
       id: uuid.v4(),
       params: {}
     }
@@ -51,7 +51,7 @@ describe('Statusify - Self Reporting', () => {
 
     it('should accept a properly formatted report', (done) => {
       const reportPOST = {
-        method: 'report',
+        method: 'REPORT',
         id: uuid.v4(),
         params: {
           timestamp: Date.now(),
@@ -91,49 +91,9 @@ describe('Statusify - Self Reporting', () => {
   });
 
   describe('Unsuccessful POSTs', () => {
-    it('should reject messages with err when payment address can not be decrypted', (done) => {
-      const reportPOST = {
-        method: 'report',
-        id: uuid.v4(),
-        params: {
-          timestamp: Date.now(),
-          'storage': {
-            'free': 1000,
-            'used': 100
-          },
-          'bandwidth': {
-            'upload': 10.5,
-            'download': 100.8
-          },
-          'contact': {
-            'protocol': 'superawesomeprotol',
-            'nodeID': Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
-            'address': '127.0.0.1',
-            'port': 1234
-          },
-          'payment': 'jlk3j4k2j34lkjk2l3k4j23gh423lk4'
-        }
-      };
-
-      const paramsSorted = _.keyArrangeDeep(reportPOST.params);
-      reportPOST.params.signature = new Message(JSON.stringify(paramsSorted)).sign(keys.client);
-
-      request(server.app)
-        .post('/')
-        .send(reportPOST)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(err).to.equal(null);
-          expect(res.body.id).to.equal(reportPOST.id);
-          expect(res.body.error).to.exist;
-          expect(res.body.result).to.not.exist;
-          done();
-        });
-    });
-
     it('should reject messages with err when signature is invalid', (done) => {
       const reportPOST = {
-        method: 'report',
+        method: 'REPORT',
         id: uuid.v4(),
         params: {
           timestamp: Date.now(),
@@ -171,45 +131,6 @@ describe('Statusify - Self Reporting', () => {
         });
     });
 
-    it('should reject messages with err when IP does not match request', (done) => {
-      const reportPOST = {
-        method: 'report',
-        id: uuid.v4(),
-        params: {
-          timestamp: Date.now(),
-          'storage': {
-            'free': 1000,
-            'used': 100
-          },
-          'bandwidth': {
-            'upload': 10.5,
-            'download': 100.8
-          },
-          'contact': {
-            'protocol': 'superawesomeprotol',
-            'nodeID': Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
-            'address': '10.10.1.5',
-            'port': 1234
-          },
-          'payment': ecies().privateKey(keys.client).publicKey(keys.payment.publicKey).encrypt('jlk3j4k2j34lkjk2l3k4j23gh423lk4').toString('base64')
-        }
-      };
-
-      const paramsSorted = _.keyArrangeDeep(reportPOST.params);
-      reportPOST.params.signature = new Message(JSON.stringify(paramsSorted)).sign(keys.client);
-
-      request(server.app)
-        .post('/')
-        .send(reportPOST)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(err).to.equal(null);
-          expect(res.body.id).to.equal(reportPOST.id);
-          expect(res.body.error).to.exist;
-          expect(res.body.result).to.not.exist;
-          done();
-        });
-    });
   });
 
 });
