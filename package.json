@@ -4,7 +4,7 @@
   "description": "Status API for farmer status reporing",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test PORT=3001 DB='mongodb://localhost:27017/statusify-test' istanbul cover _mocha -- --recursive test/",
+    "test": "NODE_ENV=test PORT=3002 DB='mongodb://localhost:27017/statusify-test' istanbul cover _mocha -- --recursive test/",
     "lint": "eslint ."
   },
   "repository": {
@@ -36,8 +36,8 @@
     "json-stable-stringify": "^1.0.1",
     "lodash": "^4.8.2",
     "lodash-keyarrange": "^1.1.0",
-    "mongoose": "^4.4.11",
     "node-uuid": "^1.4.7",
+    "request": "^2.72.0",
     "winston": "^2.2.0"
   },
   "devDependencies": {
