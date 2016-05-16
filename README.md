@@ -1,5 +1,6 @@
 [![Build Status](https://img.shields.io/travis/Storj/statusify.svg?branch=master&style=flat-square)](https://travis-ci.org/Storj/statusify)
 [![Coverage Status](https://img.shields.io/coveralls/Storj/statusify.svg?style=flat-square)](https://coveralls.io/r/Storj/statusify)
+[![GitHub license](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](https://raw.githubusercontent.com/Storj/statusify/master/LICENSE)
 
 # statusify
 For receiving and parsing users self reports.
