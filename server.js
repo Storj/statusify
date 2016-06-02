@@ -3,7 +3,6 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const routes = require('./lib/route');
 const config = require('config');
 
@@ -17,20 +16,11 @@ app.use(routes);
 let server;
 
 const start = (cb) => {
-  mongoose.connect(config.DB);
-  const db = mongoose.connection;
-  db.on('error', cb);
-  db.once('open', () => {
-    server = app.listen(config.PORT, cb);
-  });
+  server = app.listen(config.PORT, cb);
 };
 
 const stop = (cb) => {
-  server.close(() => {
-    return mongoose.disconnect(() => {
-      if (cb) { return cb(); }
-    });
-  });
+  server.close(cb);
 };
 
 module.exports = {start, stop, app};

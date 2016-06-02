@@ -1,7 +1,6 @@
 'use strict';
 
 const server = require('../server');
-const mongoose = require('mongoose');
 const request = require('supertest');
 const expect = require('chai').expect;
 const uuid = require('node-uuid');
@@ -13,7 +12,6 @@ const _ = require('lodash').mixin(require('lodash-keyarrange'));
 
 const keys = {
   client: new Bitcore.PrivateKey(),
-  payment: new Bitcore.PrivateKey(config.keys.payment)
 };
 
 describe('Statusify - Self Reporting', () => {
@@ -23,31 +21,10 @@ describe('Statusify - Self Reporting', () => {
   });
 
   after((cb) => {
-    mongoose.connection.db.dropDatabase(() => {
-      server.stop(cb);
-    });
+    server.stop(cb);
   });
 
   describe('Successful POSTs', () => {
-    const keyPOST = {
-      method: 'KEY',
-      id: uuid.v4(),
-      params: {}
-    }
-
-    it('should accept a properly formatted key request and respond with pubkey', (done) => {
-      request(server.app)
-        .post('/')
-        .send(keyPOST)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          expect(err).to.equal(null);
-          expect(res.body.error).to.not.exist;
-          expect(res.body.result).to.exist;
-          expect(res.body.result).to.equal(keys.payment.publicKey.toString('hex'));
-          done();
-        });
-    });
 
     it('should accept a properly formatted report', (done) => {
       const reportPOST = {
@@ -69,7 +46,7 @@ describe('Statusify - Self Reporting', () => {
             'address': '127.0.0.1',
             'port': 1234
           },
-          'payment': ecies().privateKey(keys.client).publicKey(keys.payment.publicKey).encrypt('jlk3j4k2j34lkjk2l3k4j23gh423lk4').toString('base64')
+          'payment': 'jlk3j4k2j34lkjk2l3k4j23gh423lk4'
         }
       };
 
@@ -111,7 +88,7 @@ describe('Statusify - Self Reporting', () => {
             'address': '127.0.0.1',
             'port': 1234
           },
-          'payment': ecies().privateKey(keys.client).publicKey(keys.payment.publicKey).encrypt('jlk3j4k2j34lkjk2l3k4j23gh423lk4').toString('base64')
+          'payment': 'jlk3j4k2j34lkjk2l3k4j23gh423lk4'
         }
       };
 
