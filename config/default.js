@@ -14,6 +14,6 @@ module.exports = {
     statusify: process.env.KEYS_STATUSIFY || new bitcore.PrivateKey().toString('hex')
   },
   systems: {
-    'data-api': process.env.SYSTEMS_DATA-API || 'http://localhost:3001'
+    'data-api': process.env.SYSTEMS_DATA_API || 'http://localhost:3001'
   }
 };
