@@ -110,4 +110,16 @@ describe('Statusify - Self Reporting', () => {
 
   });
 
+  describe('Successful GETs', () => {
+    it('should return OK', (done) => {
+      request(server.app)
+        .get('/')
+        .expect(200)
+        .end(function(err, res) {
+          if (err) return done(err);
+          done()
+        });
+    });
+  });
+
 });
