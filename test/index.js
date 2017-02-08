@@ -1,6 +1,7 @@
 'use strict';
 
-const server = require('../server');
+const proxyquire = require('proxyquire');
+const {EventEmitter} = require('events');
 const request = require('supertest');
 const expect = require('chai').expect;
 const uuid = require('node-uuid');
@@ -16,37 +17,29 @@ const keys = {
 
 describe('Statusify - Self Reporting', () => {
 
-  before((cb) => {
-    server.start(cb);
-  });
-
-  after((cb) => {
-    server.stop(cb);
-  });
-
   describe('Successful POSTs', () => {
 
     it('should accept a properly formatted report', (done) => {
+      const server = proxyquire('../server', {
+        './lib/route': proxyquire('../lib/route', {
+          restler: {
+            postJson: () => {
+              let emitter = new EventEmitter();
+              setTimeout(() => emitter.emit('complete'), 10);
+              return emitter;
+            }
+          }
+        })
+      });
       const reportPOST = {
         method: 'REPORT',
         id: uuid.v4(),
         params: {
           timestamp: Date.now(),
-          'storage': {
-            'free': 1000,
-            'used': 100
-          },
-          'bandwidth': {
-            'upload': 10.5,
-            'download': 100.8
-          },
-          'contact': {
-            'protocol': 'superawesomeprotol',
-            'nodeID': Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
-            'address': '127.0.0.1',
-            'port': 1234
-          },
-          'payment': 'jlk3j4k2j34lkjk2l3k4j23gh423lk4'
+          storageUsed: 100,
+          storageAllocated: 1000,
+          contactNodeID: Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
+          paymentAddress: 'jlk3j4k2j34lkjk2l3k4j23gh423lk4'
         }
       };
 
@@ -69,26 +62,26 @@ describe('Statusify - Self Reporting', () => {
 
   describe('Unsuccessful POSTs', () => {
     it('should reject messages with err when signature is invalid', (done) => {
+       const server = proxyquire('../server', {
+        './lib/route': proxyquire('../lib/route', {
+          restler: {
+            postJson: () => {
+              let emitter = new EventEmitter();
+              setTimeout(() => emitter.emit('complete'), 10);
+              return emitter;
+            }
+          }
+        })
+      });
       const reportPOST = {
         method: 'REPORT',
         id: uuid.v4(),
         params: {
           timestamp: Date.now(),
-          'storage': {
-            'free': 1000,
-            'used': 100
-          },
-          'bandwidth': {
-            'upload': 10.5,
-            'download': 100.8
-          },
-          'contact': {
-            'protocol': 'superawesomeprotol',
-            'nodeID': Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
-            'address': '127.0.0.1',
-            'port': 1234
-          },
-          'payment': 'jlk3j4k2j34lkjk2l3k4j23gh423lk4'
+          storageUsed: 100,
+          storageAllocated: 1000,
+          contactNodeID: Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
+          paymentAddress: 'jlk3j4k2j34lkjk2l3k4j23gh423lk4'
         }
       };
 
