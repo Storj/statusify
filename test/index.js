@@ -38,7 +38,7 @@ describe('Statusify - Self Reporting', () => {
           timestamp: Date.now(),
           storageUsed: 100,
           storageAllocated: 1000,
-          contactNodeID: Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
+          contactNodeId: Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
           paymentAddress: 'jlk3j4k2j34lkjk2l3k4j23gh423lk4'
         }
       };
@@ -80,7 +80,7 @@ describe('Statusify - Self Reporting', () => {
           timestamp: Date.now(),
           storageUsed: 100,
           storageAllocated: 1000,
-          contactNodeID: Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
+          contactNodeId: Bitcore.crypto.Hash.sha256ripemd160(keys.client.publicKey.toBuffer()).toString('hex'),
           paymentAddress: 'jlk3j4k2j34lkjk2l3k4j23gh423lk4'
         }
       };
