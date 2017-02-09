@@ -16,7 +16,7 @@ RUN apt-get update && \
 
 RUN git clone https://github.com/creationix/nvm.git /.nvm
 RUN echo ". /.nvm/nvm.sh" >> /etc/bash.bashrc
-RUN . /.nvm/nvm.sh && nvm install v5 && nvm use v5 && nvm alias default v5
+RUN . /.nvm/nvm.sh && nvm install 5.9.0 && nvm use 5.9.0 && nvm alias default v5
 
 # Bundle app source
 COPY . /app
